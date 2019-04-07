@@ -3,8 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import BootstrapVue from 'bootstrap-vue'
+import axios from 'axios'
 
 Vue.config.productionTip = false
+
+Vue.use(BootstrapVue, axios)
+
+Vue.prototype.$axios = axios.create({
+  baseURL: '',
+  timeout: 10000
+})
 
 /* eslint-disable no-new */
 new Vue({
