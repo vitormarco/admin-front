@@ -12,3 +12,4 @@ export default {
   name: 'admin'
 }
 </script>
+<style lang="scss" src="../assets/sass/app.scss"></style>
