@@ -1,7 +1,7 @@
 import {routes as home} from '../modules/home/router'
 import {routes as admin} from '../modules/admin/router'
 import {routes as login} from '../modules/login/router'
-import {routes as user} from '../modules/user/router'
+import {routes as user} from '../modules/user-edit/router'
 
 export default [
   ...home,
