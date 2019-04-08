@@ -44,7 +44,6 @@ export default {
   },
   mounted () {
     const self = this
-    console.log(sessionStorage.getItem('token'))
     this.$axios.get('/users', {
       headers: {
         Authorization: 'Bearer ' + sessionStorage.getItem('token')
