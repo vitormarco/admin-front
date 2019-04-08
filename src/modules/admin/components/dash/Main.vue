@@ -3,11 +3,27 @@
         <main id="dash">
             <b-container>
                 <b-row align-h="center">
-                    <div v-for="(item, index) in this.users" :key="index" class="w-100">
-                        <b-form-group :label="`Name: ${item.name}`"></b-form-group>
-                        <b-form-group :label="`Email address: ${item.email}`"></b-form-group>
-                        <b-form-group :label="`Permission: ${itemRoles.name}`" v-for="(itemRoles, indexRoles) in item.roles" :key="`roles-${indexRoles}`"></b-form-group>
-                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Email</th>
+                              <th>Permission</th>
+                              <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(user, index) in users" :key="index">
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td v-for="(role, index) in user.roles" :key="`roles-${index}`">{{ role.display_name }}</td>
+                                <td class="text-right">
+                                    <a>Edit</a> -
+                                    <a>Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </b-row>
             </b-container>
         </main>
@@ -28,6 +44,7 @@ export default {
   },
   mounted () {
     const self = this
+    console.log(sessionStorage.getItem('token'))
     this.$axios.get('/users', {
       headers: {
         Authorization: 'Bearer ' + sessionStorage.getItem('token')
@@ -35,7 +52,6 @@ export default {
     })
       .then(function (success) {
         self.users = success.data
-        console.log(self.users)
       })
       .catch(function (error) {
         alert(error)
