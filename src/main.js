@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue, axios)
 
 Vue.prototype.$axios = axios.create({
-  baseURL: '',
+  baseURL: 'http://127.0.0.1:8000/api/auth',
   timeout: 10000
 })
 

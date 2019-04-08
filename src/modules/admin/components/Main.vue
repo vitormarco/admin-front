@@ -1,8 +1,7 @@
 <template>
     <div>
         <main id="admin">
-            <Dash v-if="hasToken" />
-            <Login v-else />
+            <Dash v-if="proceed" />
             <router-link :to="{ name: 'home' }">TO HOME</router-link>
         </main>
     </div>
@@ -10,17 +9,20 @@
 
 <script>
 import Dash from './dash/Main'
-import Login from './login/Main'
 
 export default {
   name: 'admin',
-  components: { Dash, Login },
-  computed: {
-    hasToken: function () {
-      if (sessionStorage.getItem('token')) {
-        return true
-      }
-      return false
+  components: { Dash },
+  data () {
+    return {
+      proceed: false
+    }
+  },
+  mounted () {
+    if (sessionStorage.getItem('token')) {
+      this.proceed = true
+    } else {
+      this.$router.push({name: 'login'})
     }
   }
 }
