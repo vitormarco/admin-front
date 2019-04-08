@@ -18,7 +18,7 @@
                                 <td>{{ user.email }}</td>
                                 <td v-for="(role, index) in user.roles" :key="`roles-${index}`">{{ role.display_name }}</td>
                                 <td class="text-right">
-                                    <a>Edit</a> -
+                                    <router-link :to="`/user?id=${user.id}`">EDIT</router-link>
                                     <a>Delete</a>
                                 </td>
                             </tr>
