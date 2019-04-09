@@ -76,6 +76,11 @@ export default {
       }
     }
   },
+  mounted () {
+    if (!sessionStorage.getItem('token')) {
+      this.$router.push({name: 'login'})
+    }
+  },
   computed: {
     canSubmit () {
       return this.email && this.name && this.roles[0].id && this.password

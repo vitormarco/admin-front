@@ -86,7 +86,8 @@ export default {
     const self = this
     this.id = this.$route.params.id
     let token = sessionStorage.getItem('token')
-    if (this.id) {
+
+    if (this.id && token) {
       this.$axios.get('/users/edit/' + self.id, {
         headers: {
           Authorization: 'Bearer ' + token
@@ -99,12 +100,13 @@ export default {
         })
         .catch(function (error) {
           if (error.response.status === 401) {
-            console.log(sessionStorage.getItem('token'))
-            // self.$router.push({name: 'login'})
+            self.$router.push({name: 'login'})
           } else {
             alert(error)
           }
         })
+    } else {
+      this.$router.push({name: 'login'})
     }
   }
 }
