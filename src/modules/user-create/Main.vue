@@ -3,7 +3,7 @@
         <main id="user">
             <b-container>
                 <b-row align-h="center">
-                  <h2>Hello, {{ name }}</h2>
+                  <h2>New User</h2>
                 </b-row>
                 <b-row align-h="center">
                     <b-form class="mt-30" v-on:submit.prevent="submitForm">
@@ -14,12 +14,11 @@
                             <b-form-input type="email" required v-model="email"></b-form-input>
                         </b-form-group>
                         <b-form-group label="Password:">
-                            <b-form-input type="password" v-model="password"></b-form-input>
+                            <b-form-input type="password" v-model="password" required></b-form-input>
                         </b-form-group>
                         <b-form-group label="Roles:">
                             <b-form-select label="Roles:" v-model="roles[0].id" required>
                                 <option value="1">Administrator</option>
-                                <option value="2">Guest</option>
                             </b-form-select>
                         </b-form-group>
                         <b-button type="submit" :disabled="!canSubmit || sending" v-html="sending ? '...' : 'SUBMIT'" variant="primary"></b-button>
@@ -33,7 +32,7 @@
 
 <script>
 export default {
-  name: 'user',
+  name: 'userCreate',
   data () {
     return {
       id: '',
@@ -52,7 +51,7 @@ export default {
       let token = sessionStorage.getItem('token')
       if (this.canSubmit) {
         self.sending = true
-        this.$axios.post('/users/update/' + this.id, {
+        this.$axios.post('/users/create', {
           email: this.email,
           password: this.password.trim(),
           name: this.name,
@@ -79,32 +78,7 @@ export default {
   },
   computed: {
     canSubmit () {
-      return this.email && this.name && this.roles[0].id
-    }
-  },
-  mounted () {
-    const self = this
-    this.id = this.$route.params.id
-    let token = sessionStorage.getItem('token')
-    if (this.id) {
-      this.$axios.get('/users/edit/' + self.id, {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      })
-        .then(function (success) {
-          self.name = success.data.name
-          self.email = success.data.email
-          self.roles = success.data.roles
-        })
-        .catch(function (error) {
-          if (error.response.status === 401) {
-            console.log(sessionStorage.getItem('token'))
-            // self.$router.push({name: 'login'})
-          } else {
-            alert(error)
-          }
-        })
+      return this.email && this.name && this.roles[0].id && this.password
     }
   }
 }
